@@ -1,0 +1,39 @@
+using System;
+interface Olimpiada
+{
+    Olimpiada Clone();
+    void GetInfo();
+}
+
+class Athletics_comp: Olimpiada
+{
+    private string kind_of;
+    private string distantion;
+    public Athletics_comp(string kind_of, string distantion)
+    {
+        this.kind_of = kind_of;
+        this.distantion = distantion;
+    }
+
+    public Olimpiada Clone()
+    {
+        return new Athletics_comp(this.kind_of, this.distantion);
+    }
+    public void GetInfo()
+    {
+        Console.WriteLine("Athletics competition on {0} in distation {1}", kind_of, distantion);
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        Olimpiada figure = new Athletics_comp("running","100 metres");
+        Olimpiada cloned = figure.Clone();
+        Console.WriteLine("real competition:");
+        figure.GetInfo();
+        Console.WriteLine("cloned:");
+        cloned.GetInfo();
+    }
+}

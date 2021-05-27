@@ -1,0 +1,95 @@
+using System;
+
+public abstract class Main_competition
+{
+    public abstract string Operation();
+}
+class Concrete_comp : Main_competition
+{
+    public override string Operation()
+    {
+        return "athletics";
+    }
+}
+abstract class Decorator : Main_competition
+{
+    protected Main_competition comp;
+
+    public Decorator(Main_competition component)
+    {
+        this.comp = component;
+    }
+
+    public void SetComponent(Main_competition component)
+    {
+        this.comp = component;
+    }
+    public override string Operation()
+    {
+        if (this.comp != null)
+        {
+            return this.comp.Operation();
+        }
+        else
+        {
+            return string.Empty;
+        }
+    }
+}
+class Decorator_1 : Decorator
+{
+    public Decorator_1(Main_competition comp) : base(comp)
+    {
+    }
+    public override string Operation()
+    {
+        return $"{base.Operation()} 100 metres";
+    }
+}
+class Decorator_2 : Decorator
+{
+    public Decorator_2(Main_competition comp) : base(comp)
+    {
+    }
+
+    public override string Operation()
+    {
+        return $"{base.Operation()} 5000 metres";
+    }
+}
+
+public class Sportsman
+{
+    public void Decorate(Main_competition component)
+    {
+        Console.WriteLine(component.Operation());
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        Sportsman sportsman = new Sportsman();
+
+        var basic = new Concrete_comp();
+        Console.WriteLine("The new competition ");
+        sportsman.Decorate(basic);
+        Console.WriteLine();
+
+        Decorator_2 decorator_1 = new Decorator_2(basic);
+        Console.WriteLine("Attend ");
+        sportsman.Decorate(decorator_1);
+        
+        Console.WriteLine();
+        
+        Decorator_1 decorator_2 = new Decorator_1(basic);
+        Console.WriteLine("Attend ");
+        sportsman.Decorate(decorator_2);
+    }
+}
+
+
+
+
+

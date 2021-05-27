@@ -1,0 +1,98 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <locale>
+
+using namespace std;
+
+class Type_of_olymp
+{
+protected:
+	string type_of_olymp;
+	double amount;
+	string main_message;
+
+public:
+	virtual void mainMessage() = 0;
+
+	virtual void Type(double amount) = 0;
+
+	string getType()
+	{
+		return type_of_olymp;
+	}
+};
+
+
+class SummerOlymp : public Type_of_olymp {
+
+public:
+
+	SummerOlymp() {
+		this->type_of_olymp = "Summer";
+	}
+
+	void Type(double time)
+	{
+		this->amount = time;
+	}
+
+	void mainMessage() override
+	{
+		cout <<  type_of_olymp << " Olympics have " << amount << " competitors " << endl;
+	}
+};
+
+
+
+class WinterOlymp : public Type_of_olymp {
+
+public:
+
+	WinterOlymp() {
+		this->type_of_olymp = "Winter";
+	}
+
+	void Type(double time)
+	{
+		this->amount = time;
+	}
+
+	void mainMessage() override
+	{
+		cout  << type_of_olymp << " Olympics have " << amount << " competitors " << endl;
+	}
+};
+
+
+
+class Factory
+{
+public:
+	static Type_of_olymp* get_type(string type_of_olymp)
+	{
+		if (type_of_olymp == "Summer")
+			return new SummerOlymp();
+		if (type_of_olymp == "Winter")
+			return new WinterOlymp();
+		else
+			return nullptr;
+	}
+
+};
+
+
+
+int main()
+{
+	setlocale(LC_ALL, "Ukrainian");
+
+	Type_of_olymp* summer = Factory::get_type("Summer");
+	Type_of_olymp* wint = Factory::get_type("Winter");
+
+	summer->Type(18000);
+	wint->Type(13500);
+
+	summer->mainMessage();
+	wint->mainMessage();
+}

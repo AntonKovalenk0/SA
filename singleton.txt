@@ -1,0 +1,36 @@
+using System; 
+class Olimpiada_stadium_Singleton
+{
+	private static Olimpiada_stadium_Singleton instance; 
+    public string name; 
+    private Olimpiada_stadium_Singleton(string name) 
+    { 
+    	this.name = name; 
+    } 
+    public static Olimpiada_stadium_Singleton Create(string name) 
+    { 
+    	if (instance == null) 
+        	instance = new Olimpiada_stadium_Singleton(name); 
+        return instance; 
+    } 
+    public void Message() 
+    { 
+        Console.WriteLine("Teams {0} are playing now, stadium occupied",this.name); 
+    } 
+    public static void Release() 
+    { 
+    	instance=null; 
+    } 
+}
+class Program 
+{ 
+	static void Main(string[] args) 
+    { 
+    Olimpiada_stadium_Singleton s1 = Olimpiada_stadium_Singleton.Create("Germany vs Spain"); 	 Olimpiada_stadium_Singleton s2 = Olimpiada_stadium_Singleton.Create("Italy vs Brazil"); 	 s1.Message(); 
+    s2.Message(); 
+    Olimpiada_stadium_Singleton.Release(); 
+    Console.WriteLine("Stadium clear");
+    s2 = Olimpiada_stadium_Singleton.Create("Italy vs Brazil");
+    s2.Message(); 
+    } 
+}

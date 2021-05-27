@@ -1,0 +1,62 @@
+using System;
+using System.Collections.Generic;
+using System.Threading;
+
+namespace RefactoringGuru.DesignPatterns.Observer.Conceptual
+{
+    public interface Subscriber
+    {
+        void GetMessage(string message);
+    }
+
+    public class Sportsmens : Subscriber
+    {
+        public string name;
+        public Sportsmens(string n)
+        {
+             name=n;
+        }
+        public void GetMessage(string message)
+        {
+            Console.WriteLine("sportsman: "+ name + " receive: "+ message);
+        }
+    }
+
+   public class Coach : Subscriber
+    {
+        public string name;
+        public Coach(string n)
+        {
+             name=n;
+        }
+        public void GetMessage(string message2)
+        {
+            Console.WriteLine("coach: "+ name + " receive: "+ message2);
+        }
+    }
+    public class Reminder
+    {
+        public List<Subscriber> subs=new List<Subscriber>();
+        public void NotifyUsers(string message)
+        {
+            foreach (var temp in subs) 
+            temp.GetMessage(message);
+        }
+    }
+    
+    class Program
+    {
+        static void Main(string[] args)
+        {
+           Reminder ex=new Reminder();
+           string tname = "first_sportsman ";
+           string sname = "his_coach";
+           ex.subs.Add(new Sportsmens(tname));
+           ex.subs.Add(new Coach(sname));
+           
+           string message2 = "train starts at 9:00";
+
+           ex.NotifyUsers(message2);
+        }
+    }
+}
